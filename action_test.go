@@ -88,6 +88,14 @@ func TestNoSpace(t *testing.T) {
 	}
 }
 
+func TestNoSpaceAddsNoSpaceAfterSlash(t *testing.T) {
+	// '/' is the last character of "src/" and is in the nospace set, so no space is added
+	invoked := ActionValues("src/").NoSpace('/').Split().Invoke(Context{Value: "src/"})
+	if len(invoked.action.rawValues) != 1 || invoked.action.rawValues[0].Value != "src/" {
+		t.Errorf("rawValues = %v, want [src/]", invoked.action.rawValues)
+	}
+}
+
 func TestNoPrefix(t *testing.T) {
 	a := ActionCallback(func(c Context) Action {
 		return ActionValues().Invoke(c).Merge(
