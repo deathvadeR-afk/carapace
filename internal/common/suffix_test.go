@@ -10,3 +10,21 @@ func TestSuffixMatcherAdd(t *testing.T) {
 		t.Errorf(`should be "*" [was: "%v"]`, sm)
 	}
 }
+
+func TestSuffixMatcherMatchesEndingSuffix(t *testing.T) {
+	sm := SuffixMatcher{""}
+	sm.Add('/')
+
+	if !sm.Matches("src/") {
+		t.Errorf(`Matches("src/") should be true`)
+	}
+}
+
+func TestSuffixMatcherIgnoresLeadingSuffix(t *testing.T) {
+	sm := SuffixMatcher{""}
+	sm.Add('/')
+
+	if sm.Matches("/src") {
+		t.Errorf(`Matches("/src") should be false`)
+	}
+}

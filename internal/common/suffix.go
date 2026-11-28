@@ -34,7 +34,7 @@ func (sm *SuffixMatcher) Merge(other SuffixMatcher) {
 
 func (sm SuffixMatcher) Matches(s string) bool {
 	for _, r := range sm.string {
-		if r == '*' || strings.HasPrefix(s, string(r)) {
+		if r == '*' || strings.HasSuffix(s, string(r)) {
 			return true
 		}
 	}
